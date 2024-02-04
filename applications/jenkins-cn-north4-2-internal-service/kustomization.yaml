@@ -7,7 +7,7 @@ resources:
 namespace: jenkins-internal-service
 images:
 - name: swr.cn-north-4.myhuaweicloud.com/openeuler/bak-jenkins
-  newTag: 2617e02f98705c95e34e3d53bbbba80e01009670
+  newTag: fc7cbd36549e0ff0f6f019916a1972ec09c52044
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/openeuler-ci
   newTag: 702c396661bcb961bfda7558b25c735d6f705f0c
 apiVersion: kustomize.config.k8s.io/v1beta1
