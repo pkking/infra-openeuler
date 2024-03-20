@@ -65,6 +65,11 @@ spec:
                 secretKeyRef:
                   name: jenkins-backup-secret
                   key: repo-name
+            - name: git_user
+              valueFrom:
+                secretKeyRef:
+                  name: jenkins-backup-secret
+                  key: git-user
             ports:
             - containerPort: 80
               name: http
@@ -110,3 +115,6 @@ spec:
     repo-name:
       path: secrets/data/openeuler/jenkins
       key: repo-name
+    git-user:
+      path: secrets/data/openeuler/jenkins
+      key: git-user
