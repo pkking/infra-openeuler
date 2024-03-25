@@ -4,12 +4,14 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-issuer
     nginx.ingress.kubernetes.io/configuration-snippet: |
       location ~* injectedEnvVars/$ {
        return 403;
       }
-      location ~* /script$ {
+      location ^~ /script {
+       return 403;
+      }
+      location ^~ /manage/script {
        return 403;
       }
   name: jenkins-openatom-ingress
@@ -27,3 +29,68 @@ spec:
   - hosts:
     - jenkins.openeuler.openatom.cn
     secretName: jenkins-openatom-tls
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: jenkins-openatom-ingress-rule-02
+  namespace: jenkins-internal-service
+spec:
+  rules:
+  - host: jenkins.openeuler.openatom.cn
+    http:
+      paths:
+      - backend:
+          serviceName: jenkins-service
+          servicePort: 80
+        path: /job/(.*)/console
+  tls:
+  - hosts:
+    - jenkins.openeuler.openatom.cn
+    secretName: jenkins-openatom-tls
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: jenkins-openatom-ingress-rule-03
+  namespace: jenkins-internal-service
+spec:
+  rules:
+  - host: jenkins.openeuler.openatom.cn
+    http:
+      paths:
+      - backend:
+          serviceName: jenkins-service
+          servicePort: 80
+        path: /job/(.*)/consoleFull
+  tls:
+  - hosts:
+    - jenkins.openeuler.openatom.cn
+    secretName: jenkins-openatom-tls
+
+---
+apiVersion: secrets-manager.tuenti.io/v1alpha1
+kind: SecretDefinition
+metadata:
+  name: jenkins-openatom-tls
+  namespace: jenkins-internal-service
+spec:
+  name: jenkins-openatom-tls
+  keysMap:
+    ca.crt:
+      path: secrets/data/openeuler/openeuler-openatom-cn-tls
+      key: server.crt
+    tls.crt:
+      path: secrets/data/openeuler/openeuler-openatom-cn-tls
+      key: server.crt
+    tls.key:
+      path: secrets/data/openeuler/openeuler-openatom-cn-tls
+      key: server.key

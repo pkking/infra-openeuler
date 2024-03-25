@@ -25,17 +25,12 @@ spec:
           - --cookie-expire=12h0m0s
           - --redirect-url=https://jenkins.openeuler.openatom.cn/oauth2/callback
           - --oidc-issuer-url=https://jenkins-openeuler-openatom.authing.cn/oidc
-          - --skip-auth-regex=^/job/
-          - --skip-auth-regex=^/queue/
-          - --skip-auth-regex=^/view/
           - --skip-auth-regex=^/static/
           - --skip-auth-regex=^/adjuncts/
           - --skip-auth-regex=^/images/
-          - --skip-auth-regex=^/blue/
           - --skip-auth-regex=^/gitee-project/
           - --skip-auth-regex=^/generic-webhook-trigger/
           - --skip-auth-regex=^/crumbIssuer/
-          - --skip-auth-regex=^/computer/
           - --insecure-oidc-allow-unverified-email=true
           - --session-cookie-minimal=false
           - --pass-access-token=true
@@ -51,7 +46,6 @@ spec:
           - --skip-auth-strip-headers=false
           - --set-authorization-header=true
           - --scope=profile openid email id_token
-          - --signature-key=sha256:81nwm1iqdN3FBtnj4O0kL6BRuLfzMzCKaawnztLSRYQ
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:

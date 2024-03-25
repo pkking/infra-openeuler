@@ -4,6 +4,7 @@ resources:
 - namespace.yaml
 - ingress.yaml
 - oauth-proxy.yaml
+- service.yaml
 namespace: jenkins-internal-service
 images:
 - name: swr.cn-north-4.myhuaweicloud.com/openeuler/bak-jenkins
