@@ -5,7 +5,7 @@ metadata:
     k8s-app: oauth2-proxy
   name: oauth2-proxy
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       k8s-app: oauth2-proxy
@@ -14,6 +14,7 @@ spec:
       labels:
         k8s-app: oauth2-proxy
     spec:
+      automountServiceAccountToken: false
       containers:
         - args:
           - --provider=oidc
@@ -24,27 +25,19 @@ spec:
           - --cookie-expire=12h0m0s
           - --redirect-url=https://openeulerjenkins.osinfra.cn/oauth2/callback
           - --oidc-issuer-url=https://infra-openeulerjenkins.authing.cn/oidc
-          # for jenkins job or views and their resource to to loaded
-          - --skip-auth-regex=^/job/
-          - --skip-auth-regex=^/queue/
-          - --skip-auth-regex=^/view/
           - --skip-auth-regex=^/static/
           - --skip-auth-regex=^/adjuncts/
           - --skip-auth-regex=^/images/
-          - --skip-auth-regex=^/blue/
-          # for webhook to be triggered
           - --skip-auth-regex=^/gitee-project/
-          # for openeuler generic webhook
           - --skip-auth-regex=^/generic-webhook-trigger/
           - --skip-auth-regex=^/crumbIssuer/
-          - --skip-auth-regex=^/computer/
           - --insecure-oidc-allow-unverified-email=true
           - --session-cookie-minimal=false
           - --pass-access-token=true
           - --cookie-secure=false
-          - --login-url=https://xiheapi.osinfra.cn/oneid/oidc/authorize
-          - --redeem-url=https://xiheapi.osinfra.cn/oneid/oidc/token
-          - --profile-url=https://xiheapi.osinfra.cn/oneid/oidc/user
+          - --login-url=https://omapi.osinfra.cn/oneid/oidc/authorize
+          - --redeem-url=https://omapi.osinfra.cn/oneid/oidc/token
+          - --profile-url=https://omapi.osinfra.cn/oneid/oidc/user
           - --skip-oidc-discovery=true
           - --insecure-oidc-skip-issuer-verification=true
           - --skip-jwt-bearer-tokens=false
@@ -53,7 +46,6 @@ spec:
           - --skip-auth-strip-headers=false
           - --set-authorization-header=true
           - --scope=profile openid email id_token
-          - --signature-key=sha256:81nwm1iqdN3FBtnj4O0kL6BRuLfzMzCKaawnztLSRYQ
           env:
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:
@@ -76,6 +68,35 @@ spec:
           ports:
             - containerPort: 4180
               protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 4180
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 4180
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 500m
+              memory: 500Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
 
 ---
 

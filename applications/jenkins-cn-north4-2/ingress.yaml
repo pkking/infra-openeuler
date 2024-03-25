@@ -3,16 +3,18 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-issuer
-    nginx.ingress.kubernetes.io/custom-http-errors: "404"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    nginx.ingress.kubernetes.io/server-snippet: |
       location ~* injectedEnvVars/$ {
        return 403;
       }
-      location ~* /script$ {
+      location ^~ /script {
+       return 403;
+      }
+      location ^~ /manage/script {
        return 403;
       }
   name: jenkins-cn-north4-2-ingress
+  namespace: jenkins
 spec:
   tls:
     - hosts:
@@ -26,3 +28,68 @@ spec:
               serviceName: oauth2-proxy
               servicePort: 4180
             path: /
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: jenkins-cn-north4-2-ingress-rule-02
+  namespace: jenkins
+spec:
+  rules:
+  - host: openeulerjenkins.osinfra.cn
+    http:
+      paths:
+      - backend:
+          serviceName: jenkins
+          servicePort: 80
+        path: /job/(.*)/console
+  tls:
+  - hosts:
+    - openeulerjenkins.osinfra.cn
+    secretName: jenkins-cn-north4-tls
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  name: jenkins-cn-north4-2-ingress-rule-03
+  namespace: jenkins
+spec:
+  rules:
+  - host: openeulerjenkins.osinfra.cn
+    http:
+      paths:
+      - backend:
+          serviceName: jenkins
+          servicePort: 80
+        path: /job/(.*)/consoleFull
+  tls:
+  - hosts:
+    - openeulerjenkins.osinfra.cn
+    secretName: jenkins-cn-north4-tls
+
+---
+apiVersion: secrets-manager.tuenti.io/v1alpha1
+kind: SecretDefinition
+metadata:
+  name: jenkins-cn-north4-tls
+  namespace: jenkins
+spec:
+  name: jenkins-cn-north4-tls
+  keysMap:
+    ca.crt:
+      path: secrets/data/infra-common/osinfra-cn
+      key: server.crt
+    tls.crt:
+      path: secrets/data/infra-common/osinfra-cn
+      key: server.crt
+    tls.key:
+      path: secrets/data/infra-common/osinfra-cn
+      key: server.key
