@@ -32,6 +32,7 @@ spec:
           - --skip-auth-regex=^/gitee-project/
           - --skip-auth-regex=^/generic-webhook-trigger/
           - --skip-auth-regex=^/crumbIssuer/
+          - --skip-auth-regex=^/job/(.*)/*.log
           - --insecure-oidc-allow-unverified-email=true
           - --session-cookie-minimal=false
           - --pass-access-token=true
