@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: om-webserver
+  namespace: om-webserver-oneid
+  labels:
+    app: om-webserver
+spec:
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: om-webserver
+  template:
+    metadata:
+      labels:
+        app: om-webserver
+    spec:
+      imagePullSecrets:
+      - name: huawei-swr-image-pull-secret
+      automountServiceAccountToken: false
+      containers:
+        - name: om-webserver
+          image: swr.cn-north-4.myhuaweicloud.com/om/om-webserver:0.5.51
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 8000Mi
+            requests:
+              cpu: 2000m
+              memory: 8000Mi
+          env:
+          - name: APPLICATION_PATH
+            value: "/var/lib/om-webserver/application.properties"
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            httpGet:
+              path: /oneid/checkOmService
+              port: 8080
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            httpGet:
+              path: /oneid/checkOmService
+              port: 8080
+            timeoutSeconds: 5
+          ports:
+            - containerPort: 8080
+              name: om-webserver
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1001
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /var/lib/om-webserver/application.properties
+              subPath: application_properties
+              name: om-webserver-secrets-volume
+      volumes:
+        - name: om-webserver-secrets-volume
+          secret:
+            secretName: om-webserver-secrets
