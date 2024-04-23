@@ -1,0 +1,20 @@
+resources:
+- deployment.yaml
+- secrets.yaml
+- ingress.yaml
+- service.yaml
+- namespace.yaml
+- networkpolicy.yaml
+namespace: om-webserver-oneid
+commonAnnotations:
+  kubernetes.ops.cluster: openeuler-hk-cluster
+  kubernetes.ops.email: ""
+  kubernetes.ops.os.base: openeuler
+  kubernetes.ops.owner: taofeihu
+  kubernetes.ops.region: hk
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: swr.cn-north-4.myhuaweicloud.com/om/om-webserver
+  newName: swr.cn-north-4.myhuaweicloud.com/om/om-webserver-prod
+  newTag: master-cba68b
