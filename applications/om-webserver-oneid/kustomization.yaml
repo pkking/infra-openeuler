@@ -17,4 +17,4 @@ kind: Kustomization
 images:
 - name: swr.cn-north-4.myhuaweicloud.com/om/om-webserver
   newName: swr.cn-north-4.myhuaweicloud.com/om/om-webserver-prod
-  newTag: master-cba68b
+  newTag: master-1bad50
