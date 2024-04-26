@@ -49,3 +49,64 @@ spec:
               requests:
                 cpu: 500m
                 memory: 500Mi
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: members-change-attention-cronjob
+  namespace: openeuler-hk-cronjob
+spec:
+  schedule: "0 2 * * 3,6"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: members-change-attention
+            image: swr.cn-north-4.myhuaweicloud.com/opensourceway/common/pr-statistics-report:v1.0.20221209172140
+            command:
+            - /bin/bash
+            - -c
+            - python3 members_change_attention.py
+            env:
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: smtp_username
+                  name: pr-statistics-report-secret
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: smtp_port
+                  name: pr-statistics-report-secret
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: smtp_host
+                  name: pr-statistics-report-secret
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: smtp_password
+                  name: pr-statistics-report-secret
+            - name: SMTP_SENDER
+              valueFrom:
+                secretKeyRef:
+                  key: smtp_sender
+                  name: pr-statistics-report-secret
+            - name: ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: access_token
+                  name: pr-statistics-report-secret
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1000Mi
+              requests:
+                cpu: 500m
+                memory: 500Mi
