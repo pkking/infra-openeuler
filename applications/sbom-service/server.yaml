@@ -91,6 +91,21 @@ spec:
             secretKeyRef:
               key: gitlab_api_token_file
               name: sbom-server-secrets
+        - name: GITEE_OAUTH_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: gitee_oauth_client_id
+              name: sbom-server-secrets
+        - name: GITEE_OAUTH_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: gitee_oauth_client_secret
+              name: sbom-server-secrets
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: jwt_secret
+              name: sbom-server-secrets
         - name: X_ARMOR_BACKEND_TENANT_ID
           valueFrom:
             secretKeyRef:
