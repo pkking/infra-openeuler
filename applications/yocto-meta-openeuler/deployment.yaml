@@ -50,7 +50,7 @@ spec:
       serviceAccount: yocto-meta-openeuler
       containers:
       - name: websitepod
-        image: swr.cn-north-4.myhuaweicloud.com/opensourceway/yocto-meta-openeuler:master-c62929
+        image: swr.cn-north-4.myhuaweicloud.com/opensourceway/yocto-meta-openeuler:master-87a2e3
         imagePullPolicy: IfNotPresent
         env:
         - name: DET_URL
