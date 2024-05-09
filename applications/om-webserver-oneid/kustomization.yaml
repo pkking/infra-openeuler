@@ -5,6 +5,7 @@ resources:
 - service.yaml
 - namespace.yaml
 - networkpolicy.yaml
+- pvc.yaml
 namespace: om-webserver-oneid
 commonAnnotations:
   kubernetes.ops.cluster: openeuler-hk-cluster
