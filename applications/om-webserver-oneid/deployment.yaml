@@ -67,12 +67,7 @@ spec:
             - mountPath: /var/lib/om-webserver/application.properties
               subPath: application_properties
               name: om-webserver-secrets-volume
-            - mountPath: /opt/datastat-server
-              name: data
       volumes:
         - name: om-webserver-secrets-volume
           secret:
             secretName: om-webserver-secrets
-        - name: data
-          persistentVolumeClaim:
-            claimName: dsapi-data
