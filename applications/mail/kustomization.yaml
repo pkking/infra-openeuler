@@ -12,6 +12,8 @@ resources:
 - suiteservice.yaml
 - webservice.yaml
 - scan_subscribe_pending.yaml
+- dovecot.yaml
+- sa.yaml
 commonAnnotations:
   email: tommylikehu@gmail.com
   owner: tommylikehu
