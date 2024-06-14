@@ -5,12 +5,9 @@ metadata:
   name: server
   namespace: openeuler-easyeditor
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-    type: RollingUpdate
+    type: Recreate
   selector:
     matchLabels:
       app: server
@@ -54,10 +51,15 @@ spec:
         - mountPath: /var/lib/easyedit/application.yaml
           name: easyeditor-secret
           subPath: application.yaml
+        - mountPath: /opt/data/
+          name: data
       volumes:
       - name: easyeditor-secret
         secret:
-            secretName: easyeditor-secret
+          secretName: easyeditor-secret
+      - name: data
+        persistentVolumeClaim:
+          claimName: easyeditor-data
 
         
       
