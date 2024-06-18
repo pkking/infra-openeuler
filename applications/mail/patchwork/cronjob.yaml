@@ -169,6 +169,11 @@ spec:
                     secretKeyRef:
                       key: IMAP_PORT
                       name: patchwork-secrets
+                - name: SEND_EMAIL_DOMAIN 
+                  valueFrom:
+                    secretKeyRef:
+                      key: SEND_EMAIL_DOMAIN 
+                      name: patchwork-secrets
               command:
                 - /bin/sh
                 - -c
@@ -354,6 +359,11 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       key: IMAP_PORT
+                      name: patchwork-secrets
+                - name: SEND_EMAIL_DOMAIN 
+                  valueFrom:
+                    secretKeyRef:
+                      key: SEND_EMAIL_DOMAIN 
                       name: patchwork-secrets
               command:
                 - /bin/sh
