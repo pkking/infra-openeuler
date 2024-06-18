@@ -179,6 +179,16 @@ spec:
                 secretKeyRef:
                   key: SEND_EMAIL_DOMAIN 
                   name: patchwork-secrets
+            - name: SRC_OPENEULER_KERNEL_HOST 
+              valueFrom:
+                secretKeyRef:
+                  key: SRC_OPENEULER_KERNEL_HOST 
+                  name: patchwork-secrets
+            - name: SRC_OPENEULER_KERNEL_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: SRC_OPENEULER_KERNEL_PASS 
+                  name: patchwork-secrets
           command:
             - /bin/sh
             - -c
