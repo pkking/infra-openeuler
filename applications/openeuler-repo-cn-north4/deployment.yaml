@@ -77,7 +77,7 @@ spec:
               name: repo-nginx-configmap-volume
               subPath: ssh.pub
         - name: sbom-repo-service
-          image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/sbom-repo-service:568471465707c5102c1e93c350cfd8fb359f2e4f
+          image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/sbom-repo-service:v1.0.20240618111803
           volumeMounts:
           - mountPath: /repo/openeuler
             name: openeuler-data-volume
