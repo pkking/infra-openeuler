@@ -10,4 +10,4 @@ resources:
 namespace: mail
 images:
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/patchwork/patchwork
-  newTag: main-68e43
+  newTag: v1.0.20240620142325
