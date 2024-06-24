@@ -4,13 +4,12 @@ metadata:
   name: post-verification-deployment
   namespace: repo-post-verification
 spec:
-  replicas: 1
+  strategy:
+    type: Recreate
   revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: post-verification
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -31,6 +30,21 @@ spec:
             secretKeyRef:
               key: jasypt.encryptor.password
               name: post-verification-secrets
+        - name: accessToken
+          valueFrom:
+            secretKeyRef:
+              key: access_token
+              name: post-verification-secrets
+        - name: rootSalt
+          valueFrom:
+            secretKeyRef:
+              key: rootSalt
+              name: post-verification-secrets
+        - name: secretKey
+          valueFrom:
+            secretKeyRef:
+              key: secretKey
+              name: post-verification-secrets
         resources:
           requests:
             cpu: 2000m
@@ -43,6 +57,15 @@ spec:
           name: log-data-volume
         - mountPath: /app-publish/privatekey
           name: ssh-private-key
+        - mountPath: /usr/local/primary/ocpFile.ks
+          name: secret
+          subPath: primary-ks
+        - mountPath: /usr/local/standby/tcsFile.ks
+          name: secret
+          subPath: standby-ks
+        - mountPath: /usr/local/work/tcwFile.ks
+          name: secret
+          subPath: work-ks
       volumes:
       - name: log-data-volume
         persistentVolumeClaim:
