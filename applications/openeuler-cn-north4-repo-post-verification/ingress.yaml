@@ -5,7 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-issuer
-    nginx.ingress.kubernetes.io/whitelist-source-range: 121.37.228.245,139.159.203.30,139.9.203.63
+    nginx.ingress.kubernetes.io/whitelist-source-range: 121.37.228.245,139.159.203.30,139.9.203.63,123.60.100.82,124.70.207.239,124.71.75.234
   name: openeuler-publish-ingress
   namespace: repo-post-verification
 spec:
