@@ -184,7 +184,7 @@ spec:
       - backend:
           serviceName: jenkins
           servicePort: 80
-        path: /job/multiarch/job/(.*)/(config.xml|createItem|progressiveHtml|statusIcon)
+        path: /job/(multiarch|multiarch-ci-test)/job/(.*)/(config.xml|createItem|progressiveHtml|statusIcon)
   tls:
   - hosts:
     - openeulerjenkins.osinfra.cn
