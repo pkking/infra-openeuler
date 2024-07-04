@@ -15,4 +15,4 @@ images:
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/openeuler-reproducible-backend
   newTag: v1.0.20230310170018
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/openeuler-reproducible-website
-  newTag: b6d3db038d03f5a46566db2043ecb6bd52d19d0d
+  newTag: 264e1182b92d9ff18b3a2e708b83089054e0e1cd
