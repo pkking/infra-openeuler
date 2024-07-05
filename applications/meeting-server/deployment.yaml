@@ -32,7 +32,7 @@ spec:
       - name: huawei-swr-image-pull-secret
       containers:
       - name: meeting-server
-        image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:f5af300fc61e33f1a3228a5981674622b0ca4285
+        image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:78217d14b8b116680f84b0d7ad4a78d0deb037bc
         resources:
           requests:
             cpu: 2000m

@@ -14,6 +14,3 @@ commonAnnotations:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: meetingserver
-images:
-- name: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server
-  newTag: 78217d14b8b116680f84b0d7ad4a78d0deb037bc
