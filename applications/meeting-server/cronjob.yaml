@@ -29,7 +29,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: meeting-server
-              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:f5af300fc61e33f1a3228a5981674622b0ca4285
+              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:dev_openeuler-c01c5b
               env:
               - name: TZ
                 value: Asia/Shanghai
@@ -71,7 +71,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: meeting-server
-              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:f5af300fc61e33f1a3228a5981674622b0ca4285
+              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:dev_openeuler-c01c5b
               env:
               - name: TZ
                 value: Asia/Shanghai
@@ -114,7 +114,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: meeting-server
-              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:f5af300fc61e33f1a3228a5981674622b0ca4285
+              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:dev_openeuler-c01c5b
               env:
               - name: TZ
                 value: Asia/Shanghai
@@ -156,7 +156,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: meeting-server
-              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:f5af300fc61e33f1a3228a5981674622b0ca4285
+              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:dev_openeuler-c01c5b
               env:
               - name: TZ
                 value: Asia/Shanghai
@@ -198,7 +198,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: meeting-server
-              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:f5af300fc61e33f1a3228a5981674622b0ca4285
+              image: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/app-meeting-server:dev_openeuler-c01c5b
               env:
               - name: TZ
                 value: Asia/Shanghai

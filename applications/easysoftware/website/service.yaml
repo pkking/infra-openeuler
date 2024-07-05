@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: website-service
+  namespace: easysoftware
+  annotations:
+    kubernetes.io/elb.id: 04a9d49f-ef63-4e61-a8a1-b1ed3acc253d
+    kubernetes.io/elb.class: union
+    kubernetes.io/elb.lb-algorithm: ROUND_ROBIN
+spec:
+  ports:
+  - name: httpport
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: website
+  type: LoadBalancer
