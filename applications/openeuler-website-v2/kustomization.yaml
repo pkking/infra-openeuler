@@ -16,4 +16,4 @@ images:
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/openeuler-website-backend
   newTag: main-c903a9
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/openeuler/openeuler-website-frontend
-  newTag: c20bb2a61fec2a9b5e9c76525a9de3df4f333c2a
+  newTag: 1eb11ac569960da19d37fdb41a1978532c09b354
