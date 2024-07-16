@@ -9,4 +9,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
 - name: swr.cn-north-4.myhuaweicloud.com/opensourceway/cve-sa-backend/api-cve
-  newTag: f51546a75175ac56c805c5029c8802ae5f637319
+  newTag: c910c577574be13d3bd05e649d6929fc2fdf209e
