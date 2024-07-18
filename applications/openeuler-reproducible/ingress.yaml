@@ -20,25 +20,3 @@ spec:
               serviceName: website-service
               servicePort: 8080
             path: /
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-  name: openeuler-reproducible-server-ingress
-  namespace: openeuler-reproducible
-spec:
-  tls:
-    - hosts:
-        - reproducible-builds.openeuler.org
-      secretName: openeuler-org-tls
-  rules:
-    - host: reproducible-builds.openeuler.org
-      http:
-        paths:
-          - backend:
-              serviceName: backend-service
-              servicePort: 8080
-            path: /api
