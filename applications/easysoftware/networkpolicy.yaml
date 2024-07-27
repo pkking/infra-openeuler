@@ -18,3 +18,24 @@ spec:
   policyTypes:
     - Ingress
 apiVersion: networking.k8s.io/v1
+
+---
+kind: NetworkPolicy
+metadata:
+  name: easysoftware-server-policy-02
+  namespace: easysoftware
+spec:
+  podSelector:
+    matchLabels:
+      app: easysoftware
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 8080
+      from:
+        - podSelector:
+            matchLabels:
+              app: autoupgrade
+  policyTypes:
+    - Ingress
+apiVersion: networking.k8s.io/v1
