@@ -11,3 +11,6 @@ resources:
 namespace: easysoftware
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+images:
+- name: swr.cn-north-4.myhuaweicloud.com/opensourceway/easysoftware/easysoftware-input-prod
+  newTag: master-3eed92
