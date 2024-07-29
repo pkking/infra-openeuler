@@ -27,33 +27,29 @@ spec:
         vault.hashicorp.com/agent-inject-perms-abc.txt: "0400"
         vault.hashicorp.com/agent-inject-perms-dhparam.pem: "0400"
         vault.hashicorp.com/secret-volume-path: "/etc/nginx/cert/"
-        vault.hashicorp.com/agent-inject-secret-server.crt: "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl"
+        vault.hashicorp.com/agent-inject-secret-server.crt: "internal/data/openeuler/openeuler-org-tls-ssl"
         vault.hashicorp.com/agent-inject-template-server.crt: |
-          {{- with secret "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl" -}}
+          {{- with secret "internal/data/openeuler/openeuler-org-tls-ssl" -}}
           {{ .Data.data.ServerCrt }}
           {{- end }}
-        vault.hashicorp.com/agent-inject-secret-server.key: "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl"
+        vault.hashicorp.com/agent-inject-secret-server.key: "internal/data/openeuler/openeuler-org-tls-ssl"
         vault.hashicorp.com/agent-inject-template-server.key: |
-          {{- with secret "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl" -}}
+          {{- with secret "internal/data/openeuler/openeuler-org-tls-ssl" -}}
           {{ .Data.data.ServerKey }}
           {{- end }}
-        vault.hashicorp.com/agent-inject-secret-abc.txt: "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl"
+        vault.hashicorp.com/agent-inject-secret-abc.txt: "internal/data/openeuler/openeuler-org-tls-ssl"
         vault.hashicorp.com/agent-inject-template-abc.txt: |
-          {{- with secret "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl" -}}
+          {{- with secret "internal/data/openeuler/openeuler-org-tls-ssl" -}}
           {{ .Data.data.certificatePassword }}
           {{- end }}
-        vault.hashicorp.com/agent-inject-secret-dhparam.pem: "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl"
+        vault.hashicorp.com/agent-inject-secret-dhparam.pem: "internal/data/openeuler/openeuler-org-tls-ssl"
         vault.hashicorp.com/agent-inject-template-dhparam.pem: |
-          {{- with secret "internal/data/openeuler/openeuler-openaotm-cn-tls-ssl" -}}
+          {{- with secret "internal/data/openeuler/openeuler-org-tls-ssl" -}}
           {{ .Data.data.dhparamPem }}
           {{- end }}
       labels:
         app: website
     spec:
-      securityContext:
-        seccompProfile:
-          type: Localhost
-          localhostProfile: infra-seccomp.json
       automountServiceAccountToken: false
       serviceAccountName: easysoftware
       imagePullSecrets:
@@ -64,7 +60,7 @@ spec:
         name: website
         env:
         - name: DET_URL
-          value: https://easysoftware.openeuler.openatom.cn
+          value: https://easysoftware.openeuler.org
         ports:
         - containerPort: 8080
           name: http
@@ -80,7 +76,7 @@ spec:
             port: 8080
             httpHeaders:
             - name: "Host"
-              value: "easysoftware.openeuler.openatom.cn"
+              value: "easysoftware.openeuler.org"
           timeoutSeconds: 10
         livenessProbe:
           failureThreshold: 3
@@ -93,7 +89,7 @@ spec:
             port: 8080
             httpHeaders:
             - name: "Host"
-              value: "easysoftware.openeuler.openatom.cn"
+              value: "easysoftware.openeuler.org"
           timeoutSeconds: 10
         resources:
           limits:

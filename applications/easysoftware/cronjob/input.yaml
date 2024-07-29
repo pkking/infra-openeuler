@@ -35,6 +35,20 @@ spec:
               {{- with secret "internal/data/openeuler/easysoftware" -}}  
               {{ base64Decode .Data.data.mysqljks }}
               {{- end }}
+            vault.hashicorp.com/agent-inject-perms-rpmver-name-mapping.yml: "0400"
+            vault.hashicorp.com/secret-volume-path-rpmver-name-mapping.yml: " /home/easysoftware/pkg/appver/"
+            vault.hashicorp.com/agent-inject-secret-rpmver-name-mapping.yml: 'internal/data/openeuler/easysoftware'
+            vault.hashicorp.com/agent-inject-template-rpmver-name-mapping.yml: |  
+              {{- with secret "internal/data/openeuler/easysoftware" -}}  
+              {{ .Data.data.rpmverNameMapping }}
+              {{- end }}
+            vault.hashicorp.com/agent-inject-perms-rpm-for-monitor.txt: "0400"
+            vault.hashicorp.com/secret-volume-path-rpm-for-monitor.txt: " /home/easysoftware/pkg/appver/"
+            vault.hashicorp.com/agent-inject-secret-rpm-for-monitor.txt: 'internal/data/openeuler/easysoftware'
+            vault.hashicorp.com/agent-inject-template-rpm-for-monitor.txt: |  
+              {{- with secret "internal/data/openeuler/easysoftware" -}}  
+              {{ .Data.data.rpmForMonitor }}
+              {{- end }}
           labels:
             app: input
         spec:
@@ -42,10 +56,6 @@ spec:
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: huawei-swr-image-pull-secret
-          securityContext:
-            seccompProfile:
-              type: Localhost
-              localhostProfile: infra-seccomp.json
           automountServiceAccountToken: false
           containers:
           - image: swr.cn-north-4.myhuaweicloud.com/opensourceway/easysoftware/easysoftware-input-prod:master-7e4251
@@ -66,7 +76,6 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               runAsUser: 1001
-              # readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL

@@ -36,10 +36,6 @@ spec:
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: huawei-swr-image-pull-secret
-          securityContext:
-            seccompProfile:
-              type: Localhost
-              localhostProfile: infra-seccomp.json
           automountServiceAccountToken: false
           containers:
           - image: swr.cn-north-4.myhuaweicloud.com/opensourceway/easysoftware/easysoftware-autoupgrade-test:main-888846

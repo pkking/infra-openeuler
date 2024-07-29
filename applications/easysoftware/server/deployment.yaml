@@ -40,13 +40,21 @@ spec:
           {{- with secret "internal/data/openeuler/easysoftware" -}}  
           {{ base64Decode .Data.data.mysqljks }}
           {{- end }}
+        vault.hashicorp.com/agent-inject-perms-tls.pfx: "0400"
+        vault.hashicorp.com/agent-inject-secret-tls.pfx: 'internal/data/openeuler/easysoftware'
+        vault.hashicorp.com/agent-inject-template-tls.pfx: |  
+          {{- with secret "internal/data/openeuler/easysoftware" -}}  
+          {{ base64Decode .Data.data.tlsPfx }}
+          {{- end }}
+        vault.hashicorp.com/agent-inject-perms-kafka.jks: "0400"
+        vault.hashicorp.com/agent-inject-secret-kafka.jks: 'internal/data/openeuler/easysoftware'
+        vault.hashicorp.com/agent-inject-template-kafka.jks: |  
+          {{- with secret "internal/data/openeuler/easysoftware" -}}  
+          {{ base64Decode .Data.data.kafkajks }}
+          {{- end }}
       labels:
         app: easysoftware
     spec:
-      securityContext:
-        seccompProfile:
-          type: Localhost
-          localhostProfile: infra-seccomp.json
       automountServiceAccountToken: false
       serviceAccountName: easysoftware
       imagePullSecrets:
@@ -99,5 +107,5 @@ spec:
                 path: token
         - name: cert-volume
           persistentVolumeClaim:
-            claimName: obs-easysoftware-prod-data
+            claimName: obs-easysoftware-prod-hk-data
         

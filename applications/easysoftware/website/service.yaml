@@ -5,7 +5,7 @@ metadata:
   name: website-service
   namespace: easysoftware
   annotations:
-    kubernetes.io/elb.id: 04a9d49f-ef63-4e61-a8a1-b1ed3acc253d
+    kubernetes.io/elb.id: 1016913e-3deb-4561-a2de-e71928c7688b
     kubernetes.io/elb.class: union
     kubernetes.io/elb.lb-algorithm: ROUND_ROBIN
 spec:
