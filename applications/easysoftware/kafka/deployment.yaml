@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-deployment
+  namespace: easysoftware
+  labels:
+    app: kafka
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/agent-pre-populate-only: "true"
+        vault.hashicorp.com/tls-skip-verify: "true"
+        vault.hashicorp.com/role: 'easysoftware'
+        vault.hashicorp.com/agent-service-account-token-volume-name: "token-vol"
+        vault.hashicorp.com/agent-run-as-user: "1000"
+        vault.hashicorp.com/agent-run-as-group: "1000"
+        vault.hashicorp.com/agent-inject-perms-application.yaml: "0400"
+        vault.hashicorp.com/agent-inject-secret-application.yaml: 'internal/data/openeuler/easysoftware'
+        vault.hashicorp.com/agent-inject-template-application.yaml: |  
+          {{- with secret "internal/data/openeuler/easysoftware" -}}  
+          {{ .Data.data.kafkaConf }}
+          {{- end }}
+      labels:
+        app: kafka
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: easysoftware
+      imagePullSecrets:
+      - name: huawei-swr-image-pull-secret
+      containers:
+      - name: easysoftware
+        image: swr.cn-north-4.myhuaweicloud.com/opensourceway/easysoftware/easysoftware-kafka-prod:master-9a890f
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 1000
+          capabilities:
+            drop:
+              - ALL
+      volumes:
+        - name: token-vol
+          projected:
+            sources:
+            - serviceAccountToken:
+                audience: api
+                expirationSeconds: 600
+                path: token
+        
