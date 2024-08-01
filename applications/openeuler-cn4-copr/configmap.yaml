@@ -63,8 +63,8 @@ data:
   pools.yaml: |
     local_x86_64_normal_prod:
         max: 20
-        max_starting: 10
-        max_prealloc: 1
+        max_starting: 20
+        max_prealloc: 20
         tags:
         - copr_builder
         - arch_noarch
@@ -87,10 +87,11 @@ data:
 
     local_aarch64_normal_prod:
         max: 20
-        max_starting: 10
-        max_prealloc: 1
+        max_starting: 20
+        max_prealloc: 20
         tags:
         - copr_builder
+        - arch_noarch
         - arch_aarch64
         - arch_aarch64_native
         cmd_new: "/home/resalloc/provision/local-new-aarch64"
